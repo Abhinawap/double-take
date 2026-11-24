@@ -4,10 +4,11 @@ detect    Detect-and-rewrite over every academic item: 12 neutral questions (sho
           and 36 true-premise leading forms (should be flagged). Read every rewrite by hand.
 rejudge   The shipped judge over all 108 saved neutral-vs-other answer pairs (academic, true, academic_tag results),
           rescored as hits / false alarms / misses against the spike grader's marks (ADR 0002).
-pipeline  The whole shipped check end to end on the 12 false-premise presupposing questions; one JSON record per run.
+pipeline [false|true]  The whole shipped check end to end on the 12 presupposing questions with false (default)
+          or true premises; one JSON record per run. The true run is the only end-to-end false-alarm test.
 
 CheckFailed (unparseable after one retry) is counted separately, never as 'not leading' or SAME.
-Run from A2/ with LLM_API_KEY set:  python3 prototype/spike_checks.py detect|rejudge|pipeline
+Run from A2/ with LLM_API_KEY set:  python3 prototype/spike_checks.py detect|rejudge|pipeline [true]
 """
 import json, os, re, sys
 
@@ -117,22 +118,23 @@ def rejudge_all():
     return out
 
 
-def pipeline_all():
-    d = f"prototype/pipeline_runs/{TAG}"
+def pipeline_all(premise="false"):
+    items = ACADEMIC if premise == "false" else TRUE
+    d = f"prototype/pipeline_runs/{TAG}" + ("" if premise == "false" else "_true")
     os.makedirs(d, exist_ok=True)
-    out = [f"# Shipped check end to end ({s.PROMPT_VERSION}): `{s.MODEL}` on 12 false-premise presupposing questions\n",
+    out = [f"# Shipped check end to end ({s.PROMPT_VERSION}): `{s.MODEL}` on 12 {premise}-premise presupposing questions\n",
            "| # | question | outcome | neutral version | main claim (asked) | main claim (neutral) | truth |", "|---|---|---|---|---|---|---|"]
     counts, calls = {}, 0
-    for i, a in enumerate(ACADEMIC, 1):
+    for i, a in enumerate(items, 1):
         p = f"{d}/{i:02d}.json"
         if os.path.exists(p):
             sys.exit(f"{p} exists; move it aside first")
         r = s.check(a[1])
-        r["truth"] = a[3]
+        r["truth"] = a[-1]
         json.dump(r, open(p, "w"), indent=2, ensure_ascii=False)
         calls += len(r["raw"]) + 1 + ("neutral_answer" in r)
         counts[r["outcome"]] = counts.get(r["outcome"], 0) + 1
-        out.append(f"| {i} | {cell(a[1])} | {r['outcome']} | {cell(r.get('neutral', ''))} | {cell(r.get('claim_asked', ''))} | {cell(r.get('claim_neutral', ''))} | {cell(a[3])} |")
+        out.append(f"| {i} | {cell(a[1])} | {r['outcome']} | {cell(r.get('neutral', ''))} | {cell(r.get('claim_asked', ''))} | {cell(r.get('claim_neutral', ''))} | {cell(a[-1])} |")
         print(i, r["outcome"], flush=True)
     out.append("\n## Outcomes\n" + "\n".join(f"- {k}: {v}/12" for k, v in counts.items()))
     out.append(f"\nCalls: about {calls}. Records: `{d}/`. Grade each pair of main claims against the truth by reading.")
@@ -141,7 +143,8 @@ def pipeline_all():
 
 if __name__ == "__main__":
     cmd = sys.argv[1]
-    p = out_path(cmd)  # before any calls, so an existing result never costs a wasted run
-    lines = {"detect": detect_all, "rejudge": rejudge_all, "pipeline": pipeline_all}[cmd]()
+    premise = sys.argv[2] if cmd == "pipeline" and len(sys.argv) > 2 else "false"
+    p = out_path(cmd if premise == "false" else "pipeline_true")  # before any calls, so an existing result never costs a wasted run
+    lines = detect_all() if cmd == "detect" else rejudge_all() if cmd == "rejudge" else pipeline_all(premise)
     open(p, "w").write("\n".join(lines) + "\n")
     print("\n".join(lines[-12:]), f"\nWritten: {p}")
