@@ -1,0 +1,10 @@
+# secrets
+.env
+# course and third-party material (not mine to publish)
+docs/task/
+docs/lectureSlides/
+docs/text/
+docs/A1report/
+CLAUDE.md
+# python
+__pycache__/
