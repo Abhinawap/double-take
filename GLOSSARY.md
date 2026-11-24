@@ -22,6 +22,10 @@ _Avoid_: Loaded question, biased question
 A rewrite of a leading question that asks for the same information without stating or hinting at any answer.
 _Avoid_: Rephrasing, paraphrase, neutralised question
 
+**Rewrite drift**:
+A neutral version that asks for different information from what the leading question takes for granted, so the comparison never tests the premise.
+_Avoid_: Bad rewrite, scope creep
+
 **Main claim**:
 The one-line answer an answer gives to the question, stripped of explanation.
 _Avoid_: Summary, gist, short answer

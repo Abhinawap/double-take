@@ -1,5 +1,7 @@
 # A2 status (2026-11-17)
 
+> **Historical.** Superseded by `project-brief.md`; kept as the record of the first session.
+
 ## Idea (settled in grilling)
 Study assistant for **students asking an AI questions while studying** (not deliberately fact-checking).
 When a question is **leading** (presupposes or suggests an answer), the system also asks a **neutral
