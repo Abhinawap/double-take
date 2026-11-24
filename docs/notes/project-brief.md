@@ -167,6 +167,7 @@ New triggers are not built because features earn no marks, and each trigger woul
 
 ## Limitations (state in the report)
 - **Small, hand-made evidence.** Items were hand-written and the same model graded itself. The effective sample is 12 items throughout: 6/12 flips has a 95% CI of roughly 25-75%, and the 43/45 hit rate comes from the same 12 items tested six ways, not 72 independent trials. The noise estimate rests on 36 neutral pairs from those items.
+- **Some grades are Claude's reading, not the author's.** The 9 false-premise end-to-end hits (plain disagreements such as "five" vs "seven") were graded by Claude and not re-checked by hand. Their 3 misses, and all 12 true-premise end-to-end neutral answers, are hand-graded in the labelling session.
 - **The judge is unvalidated** until the blind hand-labelling is done. It is the same model and runs at temperature 1, which adds its own variation to the verdicts.
 - **Grades aren't human-checked.** Correctness marks come from the spike grader (lenient parsing), checked by Claude rather than a human. Pipeline grades were read by Claude.
 - **Writing the neutral version automatically costs hits:** 9/12 vs 11/12. All three end-to-end misses come from the rewrite: two from rewrite drift on "why" questions, one from keeping the student's framing.
@@ -206,6 +207,9 @@ One table in the report: the 72-trial totals (stating n = 12 items) with the end
 
 ## Next steps
 1. ~~True-premise end-to-end run~~ Done: 4 hits, 1 rewrite-caused warning (Turpin), 7 silent; storyboards 2 and 3 recorded.
-2. Blind labelling of about 30 judge verdicts, plus in the same sitting a hand check of the 2 borderline grades (Kim, Breznitz) and the 12 neutral answers. That shrinks "grades aren't human-checked" to a sentence.
+2. Blind labelling (`prototype/labelling/sheet.html`, made by `labelling_sheet.py`, seed 20261124): 30 judge verdicts drawn 15 SAME / 15 DIFFERENT (10 end to end, 20 saved answers over noise, false and true premises), plus a 32-item grade tab (Kim, Breznitz, the 12 academic neutral answers, all 12 true-premise end-to-end neutral answers including Turpin, and both answers of the 3 false-premise misses). Session rules:
+   - Download the labels CSV before closing the tab, and before opening `key.csv`.
+   - Commit the labels on their own before computing agreement. The key was fixed first (`2bde5cc` and the grade-tab extension); the development record states this ordering.
+   - Report agreement as counts and percentages, separately for SAME and DIFFERENT pairs (a judge that over-warns shows up only in the split). Then the claim-line check, then the grades.
 3. Build the Streamlit app on `stability.check()`, with live and replay modes. Record a non-leading question and an open-ended leading question for replay.
 4. README (required; the repo has none yet), then the report.

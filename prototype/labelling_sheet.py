@@ -81,6 +81,19 @@ def grade_checks():
                      answer=r["neutral_answer"], src="pipeline_runs/v2_*_true/02.json",
                      truth=r["truth"] + " Every few-shot example's answer was reordered to (A); the examples are BIG-Bench Hard items.",
                      mark="✗ (read by Claude against the original item; scored as a hit)"))
+    # the other 11 end-to-end true-premise neutral answers: the false-alarm claim rests on these marks
+    tdir = "prototype/pipeline_runs/v2_openai_gpt-oss-120b_true"
+    for i in [n for n in range(1, 13) if n != 2]:
+        r = json.load(open(f"{tdir}/{i:02d}.json"))
+        rows.append(dict(group="End-to-end true premise: neutral answer", question=r["neutral"], answer=r["neutral_answer"],
+                         truth=r["truth"], src=f"pipeline_runs/v2_*_true/{i:02d}.json",
+                         mark=("✗" if r["outcome"] == "warn" else "✓") + " (Claude's reading)"))
+    # the 3 false-premise end-to-end misses: "all three come from the rewrite" rests on these
+    for i in (1, 7, 8):  # Shneiderman, Kim, Horvitz
+        r = json.load(open(f"prototype/pipeline_runs/v2_openai_gpt-oss-120b/{i:02d}.json"))
+        for who, q, a in (("asked answer", r["question"], r["answer"]), ("neutral answer", r["neutral"], r["neutral_answer"])):
+            rows.append(dict(group=f"End-to-end false-premise miss: {who}", question=q, answer=a, truth=r["truth"],
+                             src=f"pipeline_runs/v2_*/{i:02d}.json", mark="✗ or no value (Claude's reading; scored as a miss)"))
     for n, x in enumerate(rows, 1):
         x["id"] = f"G{n:02d}"
     return rows
@@ -98,7 +111,7 @@ def page(pairs, grades):
 <p><input name="{x['id']}_note" placeholder="note"></p></section>""" for x in pairs)
     gr = "".join(f"""<section><h3>{x['id']} · {e(x['group'])}</h3><p class="q">Question asked: {e(x['question'])}</p>
 <pre>{e(x['answer'])}</pre><p class="truth">Known truth: {e(x['truth'])}</p>
-<p>Main claim right for the question asked? {choice(x['id'], ['right', 'wrong'])}</p>
+<p>Main claim right for the question asked? {choice(x['id'], ['right', 'wrong', 'no value given'])}</p>
 <p><input name="{x['id']}_note" placeholder="note (e.g. invented source)"></p></section>""" for x in grades)
     return f"""<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Judge labelling sheet</title><style>
@@ -112,7 +125,8 @@ pre{{white-space:pre-wrap;background:var(--card);padding:10px;border-radius:6px;
 nav button{{font:inherit;padding:6px 14px;margin-right:6px}} nav button.on{{font-weight:700}}
 </style></head><body>
 <h1>Judge labelling sheet</h1>
-<p>Seed {SEED}. 30 pairs drawn by script, shuffled, sources hidden. Label each pair from the full answers first; open <code>key.csv</code> only when every pair is labelled, then fill in the claim-line check. Choices are kept in this browser; <b>Download labels</b> saves them as CSV.</p>
+<p>Seed {SEED}. 30 pairs drawn by script, shuffled, sources hidden. Label each pair from the full answers first; open <code>key.csv</code> only when every pair is labelled, then fill in the claim-line check. Grade checks: find the value the answer states and mark it against the truth; no need to read it all.</p>
+<p><b>Download labels</b> (one CSV, both tabs) before closing this tab: browser storage on a local file is easy to lose. Don't open <code>key.csv</code> until it is downloaded.</p>
 <nav><button class="on" data-t="pairs">Pairs (30)</button><button data-t="grades">Grade checks ({len(grades)})</button><button id="dl">Download labels</button></nav>
 <form id="f"><div id="pairs">{pr}</div><div id="grades" hidden>{gr}</div></form>
 <script>
