@@ -2,7 +2,7 @@
 
 A study-assistant feature that warns you when the AI's answer changes with how you word the question. IIS Assignment 2.
 
-README prose: 999 words (code, commands and links not counted).
+README prose: 1010 words (code, commands and links not counted).
 
 ![Instability warning: the model answers "five" to the leading question and "seven" to the neutral one](docs/report/screenshots/sb1-norman-warning.png)
 
@@ -78,7 +78,7 @@ To inspect results without running anything, see Additional files.
   - I made the design decisions in question-by-question interview sessions with Claude and recorded them in `docs/notes/project-brief.md` and the ADRs.
   - I labelled the 30 verdicts and 32 grades blind and made the corrections in `corrections.md`.
   - Claude drafted the claim-line marks and notes; I checked each pair against the full answers.
-  - Claude re-read the spike's 144 graded answers as a model check, without a human pass. It found 2 borderline marks, and I set a grading rule for them.
+  - Claude re-checked the 144 right/wrong marks from the spike's model grader (the grader's replies weren't saved). It agreed with 142. The other 2 gave the right value but cited an invented source; I set the rule to grade the value and note the source, and confirmed both by hand in the blind grade check.
 - **gpt-oss-120b** is the system's own model. It played no part in building the project.
 
 ## Additional files
