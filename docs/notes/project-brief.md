@@ -1,7 +1,7 @@
-# Project brief: Answer-stability check (IIS Assignment 2)
+# Project brief: Double Take (IIS Assignment 2)
 
 Brief for an AI assistant joining this project. Status as of 2026-11-25: design settled, core module built and evaluated (v2), judge validation done, app not yet built.
-Repo: https://github.com/Abhinawap/answer-stability-check
+Repo: https://github.com/Abhinawap/double-take
 
 ## One-line summary
 A study-assistant feature that warns students when the AI's answer changes with how the question is worded. A second trigger, asking the same question again, is planned, not built.

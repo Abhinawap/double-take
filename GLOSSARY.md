@@ -1,4 +1,4 @@
-# Answer-stability check
+# Double Take
 
 Vocabulary for IIS Assignment 2: a study-assistant feature that warns students when an AI answer is unstable. Reliance and explanation terms come from the A1 glossary (appropriate reliance, overreliance, faithfulness).
 

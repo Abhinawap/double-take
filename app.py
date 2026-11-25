@@ -1,4 +1,4 @@
-"""Answer-stability check: Streamlit front end. Display only; all logic is in stability.py.
+"""Double Take: Streamlit front end. Display only; all logic is in stability.py.
 
 Run: streamlit run app.py   (Live mode needs LLM_API_KEY in the environment; without it the app replays saved runs.)
 """
@@ -43,8 +43,8 @@ def show(rec):
     st.markdown(rec["answer"])  # 'answer' (not leading) and 'agree' look the same: no badge
 
 
-st.set_page_config(page_title="Answer-stability check", page_icon="⚖️")
-st.title("Answer-stability check")
+st.set_page_config(page_title="Double Take", page_icon="⚖️")
+st.title("Double Take")
 
 live_ok = bool(os.environ.get("LLM_API_KEY"))
 mode = st.radio("Mode", ["Live", "Replay"], horizontal=True, label_visibility="collapsed") if live_ok else "Replay"
