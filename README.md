@@ -85,6 +85,6 @@ To inspect the results without running anything, see Additional files.
 ## Additional files
 
 - `docs/notes/project-brief.md` holds the design, evidence and decisions. `GLOSSARY.md` defines the terms, and `docs/adr/` records the design decisions.
-- `docs/report/` holds the system diagram as Graphviz source and PNG, the report outline and the storyboard screenshots.
+- `docs/report/` holds the system diagram as HTML source and PNG, the report outline and the storyboard screenshots.
 - `prototype/spike_*.md` files hold the results of each run, and `prototype/pipeline_runs/` holds the full JSON records of the end-to-end runs.
 - `prototype/labelling/` holds the blind labelling sheet, key, labels, corrections and claim-line check.
