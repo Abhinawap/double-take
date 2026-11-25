@@ -148,7 +148,7 @@ From grilling rounds 1-4 (2026-11-24) and the review that followed.
 - **Judge validation:** hand-label about 30 verdicts **blind** (verdict hidden until done), including both types, from full answers (no model shortening). Also check each main-claim line against its full answer. Report the agreement rate. **Done:** verdicts 24/30 as labelled, 26/30 with 2 misclicks; claim lines 59/60 (see `prototype/labelling/corrections.md`).
 - **Repo:**
   - A2 is its own public repo with its own `GLOSSARY.md` and `docs/adr/`.
-  - `.gitignore` excludes `.env`, `docs/task/`, `docs/lectureSlides/`, `docs/text/`, `docs/A1report/` and `CLAUDE.md`.
+  - `.gitignore` excludes `.env`.
   - No Claude co-author lines in commits; AI use is disclosed in the README.
   - Results are committed separately from the prompts they test.
   - Checked 2026-11-24: no tracked env file, `prototype/.env` absent from all history, and the key string is in no committed content.
