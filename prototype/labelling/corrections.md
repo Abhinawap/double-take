@@ -9,7 +9,7 @@
 | P01 | SAME | DIFFERENT | Misclick: the answers give 1996 vs 1995. |
 | P25 | DIFFERENT | SAME | Misclick: both answers say 1982. Answer B's first sentence reads like 1983, but it ends on 1982. |
 
-Judge agreement: **24/30 as labelled, 26/30 with the two misclicks corrected.** The four remaining disagreements (P08, P13, P15, P24) are judgment calls and stay as labelled.
+Judge agreement: **24/30 as labelled, 26/30 with the two misclicks corrected.** Split by the judge's verdict: SAME 12/15 and DIFFERENT 12/15 as labelled, 13/15 each corrected, so the judge shows no lean towards warning. The four remaining disagreements (P08, P13, P15, P24) are judgment calls and stay as labelled.
 
 ## Grades
 
