@@ -1,6 +1,6 @@
 # Project brief: Answer-stability check (IIS Assignment 2)
 
-Brief for an AI assistant joining this project. Status as of 2026-11-24: design settled, core module built and evaluated (v2), app not yet built.
+Brief for an AI assistant joining this project. Status as of 2026-11-25: design settled, core module built and evaluated (v2), judge validation done, app not yet built.
 Repo: https://github.com/Abhinawap/answer-stability-check
 
 ## One-line summary
@@ -129,7 +129,7 @@ From grilling rounds 1-4 (2026-11-24) and the review that followed.
   - **Frozen:** no further tuning against these 12 items.
 - **Judge:** outputs both main claims and a SAME/DIFFERENT verdict as JSON, in one call (`stability.JUDGE_PROMPT`).
 - **Check failures are visible.** One retry, then the failure line goes above the answer. Unparseable output never counts as "not leading" or SAME ("check in code", W03 L08). An API error on the answer shows an error with a retry. With no API key, the app opens in replay mode and says why.
-- **Stack:** Streamlit, single Python app.
+- **Stack:** Streamlit, single Python app. Re-checked 2026-11-25 and kept: the app calls the same `stability.check()` the evaluation ran, so the report's numbers come from shipped code; `st.status`, `st.expander` and `st.columns` cover the progress line, expandable answers and two columns; a marker runs it with `pip install streamlit`. A JS front end would need a Python backend or a rewrite of the core.
   - Model `openai/gpt-oss-120b` on Nebius as a config value.
   - `temperature=1.0, top_p=1.0` set explicitly on every call.
   - Docs to link in the config and README: https://github.com/openai/gpt-oss (recommends 1.0/1.0) and https://docs.tokenfactory.nebius.com/api-reference/inference/create-chat-completion.md (endpoint default temperature 1). The spike ran on the provider default.
@@ -158,6 +158,7 @@ From grilling rounds 1-4 (2026-11-24) and the review that followed.
 - **v3 rewrite rule:** for a "why" question, ask for the fact the question takes for granted, not the reason. This would fix the 2 rewrite-drift misses. It must be evaluated on fresh items.
 - **Ask-twice trigger:** report both sides from existing data. 10/36 neutral pairs disagreed, all on weak-knowledge items (few false alarms), but the model was wrong on about half the items, so it stays silent on many wrong answers. Building it would add a second call and a hold to every question.
 - **Pushback trigger:** "Are you sure?"
+- **Static replay page (optional extra):** the replay JSONs rendered as one HTML page, so a marker can view the saved runs without installing anything. Only if time allows after the app; it replays, it doesn't check.
 - **False-choice wording:** "Five stages or six?" when the answer is seven. This needs its own test items.
 - **Feedback on the student's own work:** "Is my explanation of anchoring right?" This needs a fuzzy free-text comparison with its own false-alarm problem.
 - **Retrieval:** use a source to settle a disagreement.
@@ -193,7 +194,7 @@ New triggers are not built because features earn no marks, and each trigger woul
   - G1/G2, make clear what the system can do and how well: the scope line.
   - G10, scope services when in doubt: the warning replacing the answer, and the visible failure line.
   - G11, explain why: showing both questions and the main claims.
-- **Explanation dosage:** a short, sound headline rather than long prose.
+- **Explanation dosage:** a short, sound headline rather than long prose. Soundness of the main-claim lines was checked: 59/60 match their answers.
 - **Gulf of evaluation; "shown, not just cited":** side-by-side answers make checking cheap, and pointing to notes covers the case where the system can't tell which answer is right.
 - **Trustworthiness as calibrated reliance:** the goal is appropriate reliance, not more trust.
 
@@ -207,7 +208,7 @@ One table in the report: the 72-trial totals (stating n = 12 items) with the end
 
 ## Next steps
 1. ~~True-premise end-to-end run~~ Done: 4 hits, 1 rewrite-caused warning (Turpin), 7 silent; storyboards 2 and 3 recorded.
-2. Blind labelling (`prototype/labelling/sheet.html`, made by `labelling_sheet.py`, seed 20261124): 30 judge verdicts drawn 15 SAME / 15 DIFFERENT (10 end to end, 20 saved answers over noise, false and true premises), plus a 32-item grade tab (Kim, Breznitz, the 12 academic neutral answers, all 12 true-premise end-to-end neutral answers including Turpin, and both answers of the 3 false-premise misses). Session rules:
+2. ~~Blind labelling~~ Done (`prototype/labelling/corrections.md`): verdicts 24/30 as labelled, 26/30 with 2 misclicks (SAME 13/15, DIFFERENT 13/15); claim lines 59/60; Turpin closed as ungradable. Setup, for the record (`prototype/labelling/sheet.html`, made by `labelling_sheet.py`, seed 20261124): 30 judge verdicts drawn 15 SAME / 15 DIFFERENT (10 end to end, 20 saved answers over noise, false and true premises), plus a 32-item grade tab (Kim, Breznitz, the 12 academic neutral answers, all 12 true-premise end-to-end neutral answers including Turpin, and both answers of the 3 false-premise misses). Session rules:
    - Download the labels CSV before closing the tab, and before opening `key.csv`.
    - Commit the labels on their own before computing agreement. The key was fixed first (`2bde5cc` and the grade-tab extension); the development record states this ordering.
    - Report agreement as counts and percentages, separately for SAME and DIFFERENT pairs (a judge that over-warns shows up only in the split). Then the claim-line check, then the grades.
