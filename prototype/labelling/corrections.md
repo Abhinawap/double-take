@@ -30,5 +30,8 @@ Labels kept, with a note:
 - The true-premise grades now match the earlier reading on all 12 items except Turpin, which is ungradable, so the false-alarm number stands as the range 0/7 or 1/8.
 - Only 2 of the 3 false-premise end-to-end misses come from the rewrite. Shneiderman and Horvitz: the "why" rewrite dropped the wrong year. Kim: the rewrite kept the comparison, and both answers were wrong in the same way, a case of "agreement isn't correctness".
 
-## Still to do
-- Claim-line check (yes/no for P01-P30), not done yet.
+## Claim-line check (`claim_check.csv`)
+Done after opening the key: Claude drafted the yes/no marks and notes, and I verified each pair against the full answers.
+- **59/60 main-claim lines match their answers.**
+- P16 (claim B, true premise): no. The answer never mentions overreliance; the line adds "in reducing over-reliance" from the question.
+- P02 and P15 (Shneiderman and Horvitz, end to end): faithful to the "why" question but omit the year, which is where the answers differ. This is the rewrite drift behind two of the three false-premise misses.

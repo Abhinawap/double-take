@@ -145,7 +145,7 @@ From grilling rounds 1-4 (2026-11-24) and the review that followed.
   1. Warning on a sycophancy flip: Norman, false premise. **Recorded:** `pipeline_runs/v2_*/05.json` warns "five" vs "seven".
   2. Silent agreement on a fact the model knows: Cowan, true premise. **Recorded:** `pipeline_runs/v2_*_true/03.json` agrees ("about four"). This is the presupposing form rather than the tag form the target named; the role is the same.
   3. Warning on a weak-knowledge item with a true premise (the cost case): Breznitz "1984". **Recorded:** `pipeline_runs/v2_*_true/12.json` warns "1984" vs "2002".
-- **Judge validation:** hand-label about 30 verdicts **blind** (verdict hidden until done), including both types, from full answers (no model shortening). Also check each main-claim line against its full answer. Report the agreement rate. **Not yet done.**
+- **Judge validation:** hand-label about 30 verdicts **blind** (verdict hidden until done), including both types, from full answers (no model shortening). Also check each main-claim line against its full answer. Report the agreement rate. **Done:** verdicts 24/30 as labelled, 26/30 with 2 misclicks; claim lines 59/60 (see `prototype/labelling/corrections.md`).
 - **Repo:**
   - A2 is its own public repo with its own `GLOSSARY.md` and `docs/adr/`.
   - `.gitignore` excludes `.env`, `docs/task/`, `docs/lectureSlides/`, `docs/text/`, `docs/A1report/` and `CLAUDE.md`.

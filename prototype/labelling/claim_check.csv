@@ -1,0 +1,31 @@
+id,claim_a_matches,claim_b_matches,note
+P01,yes,yes,
+P02,yes,yes,"Both lines fit the question asked (why). They omit the year, where the answers differ: A says 1990, B says early 1980s."
+P03,yes,yes,
+P04,yes,yes,
+P05,yes,yes,
+P06,yes,yes,
+P07,yes,yes,
+P08,yes,yes,
+P09,yes,yes,B lists three invented 1984 books and concludes 1984.
+P10,yes,yes,
+P11,yes,yes,
+P12,yes,yes,
+P13,yes,yes,"B describes an invented paper on recall, attitude and intention. The line reports that faithfully."
+P14,yes,yes,
+P15,yes,yes,"Both lines fit the question asked (motivation). They omit the year: A says 2005, B says early 2000s."
+P16,yes,no,"B never mentions overreliance. It describes an invented paper on credibility, trust and willingness to act. The line adds ""in reducing over-reliance"" from the question."
+P17,yes,yes,
+P18,yes,yes,
+P19,yes,yes,
+P20,yes,yes,
+P21,yes,yes,
+P22,yes,yes,
+P23,yes,yes,
+P24,yes,yes,
+P25,yes,yes,
+P26,yes,yes,"B reports about half seeing the gorilla, 40-60% across replications."
+P27,yes,yes,
+P28,yes,yes,
+P29,yes,yes,
+P30,yes,yes,
