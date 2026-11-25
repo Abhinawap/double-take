@@ -105,12 +105,12 @@ choice = lambda name, opts: "".join(f'<label><input type="radio" name="{name}" v
 
 def page(pairs, grades):
     pr = "".join(f"""<section><h3>{x['id']}</h3><p class="q">Question the judge saw: {e(x['question'])}</p>
-<div class="ab"><div><b>Answer A</b><pre>{e(x['a'])}</pre></div><div><b>Answer B</b><pre>{e(x['b'])}</pre></div></div>
+<div class="ab"><div><b>Answer A</b><div class="md">{e(x['a'])}</div></div><div><b>Answer B</b><div class="md">{e(x['b'])}</div></div></div>
 <p>Do the two answers give the same answer to the question? {choice(x['id'], ['SAME', 'DIFFERENT'])}</p>
 <p class="after">After opening the key: do the judge's main-claim lines match these answers? {choice(x['id'] + '_claims', ['yes', 'no'])}</p>
 <p><input name="{x['id']}_note" placeholder="note"></p></section>""" for x in pairs)
     gr = "".join(f"""<section><h3>{x['id']} · {e(x['group'])}</h3><p class="q">Question asked: {e(x['question'])}</p>
-<pre>{e(x['answer'])}</pre><p class="truth">Known truth: {e(x['truth'])}</p>
+<div class="md">{e(x['answer'])}</div><p class="truth">Known truth: {e(x['truth'])}</p>
 <p>Main claim right for the question asked? {choice(x['id'], ['right', 'wrong', 'no value given'])}</p>
 <p><input name="{x['id']}_note" placeholder="note (e.g. invented source)"></p></section>""" for x in grades)
     return f"""<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
@@ -119,7 +119,8 @@ def page(pairs, grades):
 @media (prefers-color-scheme: dark){{:root{{--bg:#181818;--fg:#e8e8e8;--muted:#aaa;--line:#333;--card:#222}}}}
 body{{background:var(--bg);color:var(--fg);font:15px/1.5 system-ui,sans-serif;max-width:1100px;margin:0 auto;padding:16px}}
 section{{border:1px solid var(--line);border-radius:8px;padding:12px 16px;margin:16px 0}}
-pre{{white-space:pre-wrap;background:var(--card);padding:10px;border-radius:6px;font:14px/1.45 system-ui,sans-serif;margin:4px 0}}
+
+.md{{white-space:pre-wrap;background:var(--card);padding:10px;border-radius:6px;font:14px/1.45 system-ui,sans-serif;margin:4px 0}} .md.done{{white-space:normal}} .md table{{border-collapse:collapse}} .md td,.md th{{border:1px solid var(--line);padding:2px 6px}}
 .ab{{display:grid;grid-template-columns:1fr 1fr;gap:12px}} @media (max-width:700px){{.ab{{grid-template-columns:1fr}}}}
 .q{{font-weight:600}} .after,.truth{{color:var(--muted)}} input[name$=_note]{{width:100%}}
 nav button{{font:inherit;padding:6px 14px;margin-right:6px}} nav button.on{{font-weight:700}}
@@ -137,7 +138,9 @@ f.addEventListener('input',()=>{{const d={{}}; for(const el of f.elements) if(el
 document.querySelectorAll('nav button[data-t]').forEach(b=>b.onclick=()=>{{document.querySelectorAll('nav button[data-t]').forEach(x=>x.classList.toggle('on',x===b)); for(const t of ['pairs','grades']) document.getElementById(t).hidden=t!==b.dataset.t;}});
 document.getElementById('dl').onclick=()=>{{const rows=[['field','value'],...Object.entries(saved)].map(r=>r.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(','));
 const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([rows.join('\\n')],{{type:'text/csv'}})); a.download='labels.csv'; a.click();}};
-</script></body></html>"""
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.2/marked.min.js"></script>
+<script>if(window.marked) for(const el of document.querySelectorAll('.md')){{el.innerHTML=marked.parse(el.textContent); el.classList.add('done');}}</script></body></html>"""
 
 
 if __name__ == "__main__":
