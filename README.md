@@ -2,7 +2,7 @@
 
 A study-assistant feature that warns you when the AI's answer changes with how you word the question. IIS Assignment 2.
 
-README prose: 1183 words, not counting code, commands and links.
+README prose: 1196 words, not counting code, commands and links.
 
 ![Instability warning: the model answers "five" to the leading question and "seven" to the neutral one](docs/report/screenshots/sb1-norman-warning.png)
 
@@ -18,7 +18,7 @@ README prose: 1183 words, not counting code, commands and links.
 - The Streamlit app in `app.py` has a Live mode and a Replay mode.
 
 ### Saved runs
-Replay mode loads saved `stability.check()` records from `replays/` and labels each one with the model, temperature, prompt version and date. It needs no API key. A closed panel called "Behind the check" shows markers the neutral version, the main claims and the known answer.
+Replay mode loads saved `stability.check()` records from `replays/` and labels each one with the model, temperature, prompt version and date. It needs no API key. A closed panel called "Behind the check" shows the marker the neutral version, the main claims and the known answer.
 
 ### Evaluation
 I froze the v2 prompts before any result. All numbers come from 12 items.
@@ -37,6 +37,7 @@ I froze the v2 prompts before any result. All numbers come from 12 items.
 - **Python 3 and the standard library.** The core in `stability.py` makes the HTTP calls, parses JSON strictly, retries once and runs the first answer in parallel with detection.
 - **Streamlit.** The app calls the same `stability.check()` that the evaluation ran, so the reported numbers come from the shipped code.
 - **The model.** `openai/gpt-oss-120b` runs on Nebius Token Factory, an OpenAI-compatible endpoint, with `temperature=1.0, top_p=1.0` set on every call ([gpt-oss](https://github.com/openai/gpt-oss), [Nebius API](https://docs.tokenfactory.nebius.com/api-reference/inference/create-chat-completion.md)). The model and endpoint are config values.
+- **Claude Code.** The development assistant. See AI assistance.
 - **Still undecided.** I haven't chosen the front end for later work. The core doesn't depend on Streamlit.
 
 ## Running or inspecting the work
@@ -77,7 +78,7 @@ To inspect the results without running anything, see Additional files.
 
 ## AI assistance
 
-- **Claude Code (Claude Opus)** helped write the spike and evaluation scripts, draft the detect and judge prompts, build the labelling sheet and the app, take the storyboard screenshots, and draft the docs and this README.
+- **Claude Code (Claude Opus)** helped write the spike and evaluation scripts, draft the detect and judge prompts, build the labelling sheet and the app, draw the system diagram, take the storyboard screenshots, and draft the docs and this README.
   - I made the design decisions in question-by-question interviews with Claude and recorded them in `docs/notes/project-brief.md` and the ADRs.
   - I labelled the 30 verdicts and 32 grades blind and made the corrections in `corrections.md`.
   - Claude drafted the claim-line marks and notes, and I checked each pair against the full answers.
