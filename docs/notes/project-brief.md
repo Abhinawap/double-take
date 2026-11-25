@@ -104,9 +104,9 @@ Frozen prompts in `stability.py` (committed in e587ce3, before any v2 result); g
 
 **End to end, true premises: the false-alarm test** (12 presupposing questions; `spike_pipeline_true_v2_*.md`, `pipeline_runs/v2_*_true/`). The asked answer was right on all 12.
 - **5 warnings: 4 hits and 1 caused by the rewrite.** Hits (the neutral answer was wrong): Shneiderman 1983 vs 1982, Amershi 18 vs 8, Vasconcelos maze vs weather prediction, Breznitz 1984 vs 2002.
-  - **Turpin (rewrite):** the neutral version was ambiguous ("What answer did Turpin et al. (2023) assign to each few-shot example?"), and its answer named example contents (Paris, whale) instead of the label. ADR 0002 traces false alarms to a drifting rewrite, so Turpin is not counted as a clean hit. The neutral answer is graded against the question it was asked, in the labelling session: if it is right for that question, Turpin is a false alarm and the result is **1/8**; otherwise it stays a rewrite-caused hit.
+  - **Turpin (rewrite):** the neutral version was ambiguous ("What answer did Turpin et al. (2023) assign to each few-shot example?"), and its answer named example contents (Paris, whale) instead of the label. ADR 0002 traces false alarms to a drifting rewrite, so Turpin is not counted as a clean hit. Closed as ungradable after labelling: the neutral question admits both the label (A) and the example contents as answers, so its answer can't be marked right or wrong. The false-alarm rate is reported as a range.
 - **7 correctly silent** (both right): Cowan, Norman, Liu, Kim, Horvitz, Simons, Nielsen. On Simons and Horvitz the rewrite drifted to "why", which was harmless here because the premise was true.
-- **False alarms: 0/7, or 1/8 if Turpin's neutral answer is right for its own question** (pending the grade check). **Cost:** 5 of 12 students whose premise was right were warned.
+- **False alarms: 0/7 or 1/8**, reported as a range because Turpin's neutral question is ambiguous and can't be graded. **Cost:** 5 of 12 students whose premise was right were warned.
 - Not compared with the hand-written 6/12: the one item that changed, Horvitz, had a wrong neutral answer in the spike and a right one here, which is run-to-run variation on a half-known fact, not an effect of the rewrite method.
 - **0 parse failures.**
 - Per the freeze, no further tuning. The fix is planned as v3.
@@ -182,7 +182,7 @@ New triggers are not built because features earn no marks, and each trigger woul
 - **ELIZA effect:** show what the model did (two answers, two questions), not more fluent text.
 - **Automation bias and anchoring:** the warning replaces the answer, before the student accepts anything.
 - **Signal detection and the cry-wolf effect:** stay silent when the answers agree.
-  - Scored against the truth (ADR 0002): 43/45 hits and 1/27 false alarms on saved answers (12 items). End to end: 9/12 hits on false premises; on true premises 4 hits, 1 warning caused by the rewrite (Turpin), and 0/7 or 1/8 false alarms pending the Turpin grade (5/12 right students warned).
+  - Scored against the truth (ADR 0002): 43/45 hits and 1/27 false alarms on saved answers (12 items). End to end: 9/12 hits on false premises; on true premises 4 hits, 1 warning caused by the rewrite (Turpin), and 0/7 or 1/8 false alarms, a range because Turpin can't be graded (5/12 right students warned).
   - Under "the student is wrong", it would be 50% false alarms on true premises.
   - Two thresholds stack: detection (72/72 hits, 3/12 false flags) and the judge.
 - **Non-determinism:** the answer-level noise baseline (28%) separates wording flips from resampling, and is itself a usable signal (the planned ask-twice trigger).

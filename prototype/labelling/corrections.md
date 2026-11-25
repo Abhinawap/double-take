@@ -24,10 +24,10 @@ Labels kept, with a note:
 - G27 (Shneiderman, asked): right, but it accepts the false premise (1990).
 - G31 (Horvitz, asked): right, but it accepts the false premise (2005).
 - G32 (Horvitz, neutral): right; "early-2000s" is only a side detail.
-- G15 (Turpin): no value. The Turpin warning is still open: true-premise false alarms are 0/7 or 1/8.
+- G15 (Turpin): no value, closed as ungradable. The neutral question ("What answer did Turpin et al. (2023) assign to each few-shot example?") admits both the label (A) and the example contents, so the answer can't be marked right or wrong. True-premise false alarms are reported as the range 0/7 or 1/8.
 
 ## What this changes
-- The true-premise grades now match the earlier reading on all 12 items except Turpin, so the false-alarm number stands.
+- The true-premise grades now match the earlier reading on all 12 items except Turpin, which is ungradable, so the false-alarm number stands as the range 0/7 or 1/8.
 - Only 2 of the 3 false-premise end-to-end misses come from the rewrite. Shneiderman and Horvitz: the "why" rewrite dropped the wrong year. Kim: the rewrite kept the comparison, and both answers were wrong in the same way, a case of "agreement isn't correctness".
 
 ## Still to do
