@@ -8,6 +8,8 @@ README prose: 1183 words, not counting code, commands and links.
 
 ## Project status
 
+![System diagram: implemented, simulated and planned parts](docs/report/system-diagram.png)
+
 ### Works live
 - The model decides whether a question is leading, meaning it presupposes, suggests or asks to confirm an answer. If it is, the model writes a neutral version.
 - The model answers both versions. The judge extracts each main claim and returns SAME or DIFFERENT.
