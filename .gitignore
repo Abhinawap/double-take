@@ -8,3 +8,4 @@ docs/A1report/
 CLAUDE.md
 # python
 __pycache__/
+.venv/

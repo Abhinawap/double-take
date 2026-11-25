@@ -111,14 +111,16 @@ def judge(q, a, b, log=None):
     return _with_retry(JUDGE_PROMPT.format(q=q, a=a, b=b), parse_judge, [] if log is None else log)
 
 
-def check(question):
+def check(question, step=lambda label: None):
     """Run the whole stability check and return a JSON-serialisable record (what the app shows and replay stores).
 
     The first answer runs in parallel with detection because both paths need it. Nothing here touches the UI.
     outcome: 'answer' (not leading), 'agree', 'warn' (disagreement) or 'check_failed' (show the failure line above the answer).
+    step(label) reports progress; it is only ever called on the caller's thread, so it may touch the UI.
     """
     rec = {"question": question, "model": MODEL, "temperature": TEMPERATURE, "top_p": TOP_P,
            "prompt_version": PROMPT_VERSION, "date": datetime.date.today().isoformat(), "raw": []}
+    step("Checking your question…")
     with ThreadPoolExecutor(2) as pool:
         answer = pool.submit(ask, question)
         try:
@@ -130,7 +132,9 @@ def check(question):
     if not rec["leading"]:
         rec["outcome"] = "answer"
         return rec
+    step("Asking a neutral version…")
     rec["neutral_answer"] = ask(rec["neutral"])
+    step("Comparing answers…")
     try:
         disagree, rec["claim_asked"], rec["claim_neutral"] = judge(rec["neutral"], rec["answer"], rec["neutral_answer"], rec["raw"])
     except CheckFailed as e:

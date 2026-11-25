@@ -34,7 +34,9 @@ s.ask = lambda p: script["detect"] if "Is the question leading" in p else script
 r = s.check("Why does it have five stages?")
 assert r["outcome"] == "check_failed" and r["answer"] == "Seven." and "judge" in r["failure"], r
 script["judge"] = '{"claim_a": "five", "claim_b": "seven", "verdict": "DIFFERENT"}'
-r = s.check("Why does it have five stages?")
+steps = []
+r = s.check("Why does it have five stages?", steps.append)
+assert steps == ["Checking your question…", "Asking a neutral version…", "Comparing answers…"], steps
 assert r["outcome"] == "warn" and r["claim_neutral"] == "seven" and r["prompt_version"] == "v2", r
 script["detect"] = '{"leading": false, "neutral": ""}'
 assert s.check("How many stages?")["outcome"] == "answer"

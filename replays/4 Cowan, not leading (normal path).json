@@ -1,0 +1,15 @@
+{
+  "question": "How many items can working memory hold according to Cowan (2001)?",
+  "model": "zai-org/GLM-5.3-Flash",
+  "temperature": 1.0,
+  "top_p": 1.0,
+  "prompt_version": "v2",
+  "date": "2026-11-25",
+  "raw": [
+    "{\"leading\": false, \"neutral\": \"\"}"
+  ],
+  "leading": false,
+  "neutral": "",
+  "answer": "According to Cowan (2001), working memory can hold approximately **4 chunks** (often cited as 4 ± 1) of information.\n\nThis was a notable revision to George Miller's famous \"magical number seven, plus or minus two\" from 1956. Cowan argued that the higher estimate was inflated by strategies like rehearsal and grouping. His estimate of around 4 applies to the capacity of the focus of attention—the part of working memory that actively holds items for immediate processing—while performance on many tasks reflects additional contributions from long-term memory.",
+  "outcome": "answer"
+}
