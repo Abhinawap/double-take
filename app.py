@@ -2,7 +2,7 @@
 
 Run: streamlit run app.py   (Live mode needs LLM_API_KEY in the environment; without it the app replays saved runs.)
 """
-import json, os, pathlib
+import json, os, pathlib, re
 import streamlit as st
 import stability
 
@@ -19,7 +19,8 @@ def first_paragraph(text):
         out.append(p)
         if not p.lstrip().startswith(("#", "**")) or len(p.strip().splitlines()) > 1:
             break
-    return "\n\n".join(out)
+    # headings shown as bold, so the two columns line up whatever format each answer used
+    return "\n\n".join(re.sub(r"^#+\s*(.+?)\s*$", r"**\1**", p, flags=re.M) for p in out)
 
 
 def show(rec):
